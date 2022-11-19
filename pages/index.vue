@@ -29,10 +29,18 @@ const tags = ref([]);
 async function getPosts() {
   const posts = await service.getzHomeFreePosts();
   console.log(posts.documents);
-  postList.value = posts.documents.slice(6);
-
-  randomePosts.value = posts.documents.slice(0, 6);
-  tags.value = setTags(posts.documents);
+  if (posts.documents == undefined) {
+    postList.value = [];
+    tags.value = [];
+  } else if (posts.documents.length >= 6) {
+    postList.value = posts.documents.slice(6);
+    randomePosts.value = posts.documents.slice(0, 6);
+    tags.value = setTags(posts.documents);
+  } else {
+    postList.value = posts.documents.slice(1);
+    randomePosts.value = posts.documents.slice(0, 1);
+    tags.value = setTags(posts.documents);
+  }
   loading.value = true;
 }
 getPosts();

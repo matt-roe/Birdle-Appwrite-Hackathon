@@ -68,7 +68,6 @@
 </style>
 <script setup>
 const { loginwith } = stateManager();
-const config = useRuntimeConfig();
 
 function toggle() {
   loginwith._object.state = false;
@@ -78,7 +77,7 @@ const appwrite = useAppwrite();
 function loginwithGoogle() {
   appwrite.account.createOAuth2Session(
     "google",
-    "https://medium-lac.vercel.app/me/"
+    window.__NUXT__.config.public.siteBase+"me/"
   );
 }
 </script>

@@ -71,8 +71,8 @@ import { Appwrite } from "appwrite";
 const sdk = new Appwrite();
 
 sdk
-  .setEndpoint("https://medium.termshel.com/v1") // Your Appwrite Endpoint
-  .setProject("6259163355147c1f4364");
+  .setEndpoint(window.__NUXT__.config.public.apiBase) // Your Appwrite Endpoint
+  .setProject(window.__NUXT__.config.public.project);
 
 // setTimeout(()=>{
 //   console.log(user)
@@ -135,7 +135,7 @@ function updatePrefs() {
 //  console.log(payload);
 
   let updateUserData = sdk.database.createDocument(
-    "625a2fc009e1c2051230",
+    window.__NUXT__.config.public.userDataCollection,
     user.value.$id.toString(),
     payload
   );

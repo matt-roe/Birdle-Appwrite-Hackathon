@@ -2,8 +2,8 @@ import { Appwrite, Models, Query } from "appwrite";
 
 const appwrite = new Appwrite();
 appwrite
-  .setEndpoint(window.__NUXT__.config.public.apiRoot)
-  .setProject(window.atob(window.__NUXT__.config.public.birdle));
+  .setEndpoint(window.__NUXT__.config.public.apiBase)
+  .setProject(window.__NUXT__.config.public.project);
 
 export type PostWithoutContent = {
   name: string;
@@ -23,12 +23,12 @@ export type UserData = {
 } & Models.Document;
 
 export const userService = () => {
-  const profileCollection = "625f78027b24b0de372e";
-  const userDataCollection = "625a2fc009e1c2051230";
-  const publicationCollection = "625a2f9bd24e2f85461b";
-  const postsCollection = "625a2f5e86376aefffe6";
-  const userStorageBucket = "625f78027b24b0de372e";
-  const pubStorageBucket = "6274714401569899bb9f";
+  const profileCollection = window.__NUXT__.config.public.profileCollection;
+  const userDataCollection = window.__NUXT__.config.public.userDataCollection;
+  const publicationCollection = window.__NUXT__.config.public.publicationCollection;
+  const postsCollection = window.__NUXT__.config.public.postsCollection;
+  const userStorageBucket = window.__NUXT__.config.public.userStorageBucket;
+  const pubStorageBucket = window.__NUXT__.config.public.pubStorageBucket;
 
   async function getAuthStatus(): Promise<boolean> {
     try {
@@ -62,8 +62,8 @@ export const userService = () => {
   ): Promise<boolean> {
     console.log(url, img);
     try {
-      // const { $id: userId, } = await appwrite.account.get();
-      // const currentUserData = await getUserNameFromUserID(userId.toString())
+      //const { $id: userId, } = await appwrite.account.get();
+      //const currentUserData = await getUserNameFromUserID(userId.toString())
 
       await appwrite.database.createDocument(postsCollection, "unique()", {
         user_id: userId,
@@ -310,8 +310,9 @@ export const userService = () => {
       );
       return postList;
     } catch (err: any) {
+      const postList = [];
       alert(err.message);
-      return false;
+      return postList;
     }
   }
 

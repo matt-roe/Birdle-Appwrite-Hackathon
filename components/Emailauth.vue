@@ -56,7 +56,7 @@ function sendLink() {
   let promise = appwrite.account.createMagicURLSession(
     "unique()",
     emailValue.value,
-    "https://medium-lac.vercel.app/me/"
+    window.__NUXT__.config.public.siteBase +"me/"
   );
 
   promise.then(
