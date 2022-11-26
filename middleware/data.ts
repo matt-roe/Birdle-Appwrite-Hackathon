@@ -8,5 +8,4 @@ export default defineNuxtRouteMiddleware(async function (to, from) {
     userData.value = currentUserData;
     console.log("FILLED UP USER")
   }
-
 });

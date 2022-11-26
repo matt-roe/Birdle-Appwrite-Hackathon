@@ -199,7 +199,7 @@ export const userService = () => {
   async function test(): Promise<UserData> {
     const user = await appwrite.account.get();
     console.log(user.$id);
-    const userData: Models.DocuementList<UserData> =
+    const userData: Models.DocumentList<UserData> =
       await appwrite.database.listDocuments<UserData>(userDataCollection, [
         Query.equal("$id", user.$id),
       ]);
@@ -287,7 +287,7 @@ export const userService = () => {
   async function getPubsForAuthor(username: string) {
     try {
       const pub = await appwrite.database.listDocuments(publicationCollection, [
-        Query.search("writers", [username.toString()]),
+        Query.search("writers", username),
       ]);
       return pub;
     } catch (err: any) {
@@ -425,7 +425,7 @@ export const userService = () => {
     readingTime: string,
     userId: string,
     username: string,
-    tagsArray: Array,
+    tagsArray: Array<string[]>,
     pubName: string,
     postUserName: string,
     userImage: string,
@@ -515,8 +515,8 @@ export const userService = () => {
   async function currentAuthorPubs(userID: string, username: string) {
     try {
       const pub = await appwrite.database.listDocuments(publicationCollection, [
-        Query.search("writers", [username.toString()]),
-        Query.equal("user_id", userID.toString()),
+        Query.search("writers", username),
+        Query.equal("user_id", userID),
       ]);
       return pub;
     } catch (err: any) {

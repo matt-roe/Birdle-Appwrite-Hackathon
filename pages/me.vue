@@ -74,9 +74,9 @@ sdk
   .setEndpoint(window.__NUXT__.config.public.apiBase) // Your Appwrite Endpoint
   .setProject(window.__NUXT__.config.public.project);
 
-// setTimeout(()=>{
-//   console.log(user)
-// }, 500);
+ setTimeout(()=>{
+    console.log(user)
+  }, 500);
 
 function setPrefs() {
   const userPrefs = { userSet: true };
@@ -85,7 +85,7 @@ function setPrefs() {
 
   promise.then(
     function (response) {
-//      console.log("SET PREFS", response); // Success
+      console.log("SET PREFS", response); // Success
     },
     function (error) {
       console.log(error); // Failure
@@ -98,10 +98,10 @@ function getUserPref(callback) {
   let data = null;
   promise.then(
     function (response) {
-  //    console.log("GET PREFS"); // Success
+  console.log("GET PREFS"); // Success
 
       if (response.userSet) {
-    //    console.log("PREFS NOT NULL");
+        console.log("PREFS NOT NULL");
       } else {
         callback();
       }
@@ -126,13 +126,14 @@ function updatePrefs() {
 
   const payload = {
     username: user.value.email.split("@")[0].toString(),
+    email: user.value.email.toString(),
     name: user.value.name.toString(),
     img: "",
     bio: "",
     member: true,
   };
 
-//  console.log(payload);
+  console.log(payload);
 
   let updateUserData = sdk.database.createDocument(
     window.__NUXT__.config.public.userDataCollection,
@@ -142,10 +143,10 @@ function updatePrefs() {
 
   updateUserData.then(
     function (response) {
-      //console.log(response); // Success
-      //console.log("Payload uploaded.")
+      console.log(response); // Success
+      console.log("Payload uploaded.")
       userData.value = response;
-      //console.log("userData", userData.value)
+      console.log("userData", userData.value)
       setPrefs();
     },
     function (error) {
@@ -158,7 +159,7 @@ function getUser(name) {
   let promise = sdk.account.get();
   promise.then(
     function (response) {
-      // console.log(response)
+      console.log(response)
       user.value = response;
       loggedin.value = true;
       if (name) {
@@ -169,9 +170,9 @@ function getUser(name) {
 
       getUserPref(updatePrefs);
 
-      // setTimeout(()=>{
-      //   updatePrefs();
-      // }, 300);
+      setTimeout(()=>{
+        updatePrefs();
+      }, 300);
     },
     function (error) {
       console.log("ACCOUNT NOT FOUND");
@@ -191,7 +192,7 @@ function authenticateUser(id, secret) {
 
   promise.then(
     function (response) {
-      //console.log(response); // Success
+      console.log(response); // Success
       // if success we update the current user by getting and setting the current user
       getUser((name = null));
     },
@@ -216,13 +217,13 @@ const ss = route.query.secret;
 if (uid && ss) {
   authenticateUser(uid, ss);
 } else {
-  //console.log("No parameters");
+  console.log("No parameters");
 
   let promise = sdk.account.get();
 
   promise.then(
     function (response) {
-    //  console.log("GOOGLE USER DATA", response); // Success
+      console.log("GOOGLE USER DATA", response); // Success
       getUser(response.name.toString());
     },
     function (error) {
